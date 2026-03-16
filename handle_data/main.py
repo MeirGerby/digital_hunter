@@ -20,17 +20,24 @@ class Manager:
         """the callback function for handling and managing the coming data"""
         try: 
             if "reported_lat" in data:
-                
+                # the message is from intel 
                 log_event(level="INFO", message="") 
             elif "weapon_type" in data:
+                # the message is from airforce attack 
                 log_event(level="INFO", message="") 
+
             elif "result" in data:
+                # the message is from damage 
                 log_event(level="INFO", message="") 
+                damage = DamageSchema(**data)
+                if damage.result == "destroyed":
+                    raise Exception(f"the target {damage.entity_id} already destroyed")
             else:
                 log_event(level="Error", message="")
                 self.producer.send_message(data=data, topic=KAFKA_SIGNALS_INTEL_TOPIC)
         except Exception as e: 
-            log_event(level="Error", message=f"{e}")
+            log_event(level="Error", message=f"{e}", extra_info=data)
+            self.producer.send_message(data=data, topic=KAFKA_SIGNALS_INTEL_TOPIC)
 
 
     def main(self):
