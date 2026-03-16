@@ -25,19 +25,21 @@ class Manager:
         try: 
             if "reported_lat" in data:
                 # the message is from intel 
-                log_event(level="INFO", message="")
                 clean_data = IntelSchema(**data).model_dump()
                 self.mysql_repository.insert_to_intel(values=clean_data, connector=self.mysql_connector)  # type: ignore
+
             elif "weapon_type" in data:
-                # the message is from airforce attack 
-                log_event(level="INFO", message="") 
+                # the message is from airforce attack
+                clean_data = IntelSchema(**data).model_dump() 
+                self.mysql_repository.insert_to_attack(values=clean_data, connector=self.mysql_connector)  # type: ignore
 
             elif "result" in data:
                 # the message is from damage 
-                log_event(level="INFO", message="") 
                 damage = DamageSchema(**data)
                 if damage.result == "destroyed":
                     raise Exception(f"the target {damage.entity_id} already destroyed")
+                clean_data = damage.model_dump()
+                self.mysql_repository.insert_to_damage(values=clean_data, connector=self.mysql_connector)  # type: ignore
             else:
                 log_event(level="Error", message="")
                 self.producer.send_message(data=data, topic=KAFKA_SIGNALS_INTEL_TOPIC)
