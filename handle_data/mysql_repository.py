@@ -99,7 +99,7 @@ class MySQLRepository:
         """insert data to target table"""
         cursor = connector.cursor()
         for i in target_bank:
-            query = "INSERT INTO target (entity_id, name, type, lat, lon, priority_level, status) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            query = "INSERT INTO target_bank (entity_id, name, type, lat, lon, priority_level, status) VALUES (%s, %s, %s, %s, %s, %s, %s)"
             print(i.values())
             cursor.execute(operation=query, params=list(i.values())) 
             connector.commit()
