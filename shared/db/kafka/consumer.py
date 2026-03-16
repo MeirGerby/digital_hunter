@@ -16,7 +16,7 @@ class ConsumerMessage:
     def consumer_loop(self, callback, topic):
         self.consumer.subscribe([topic])
 
-        print(f"Consumer is running and subscribed to {KAFKA_TOPIC} topics")
+        print(f"Consumer is running and subscribed to {topic} topics")
 
         try:
             while True:
