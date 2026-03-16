@@ -7,7 +7,7 @@ from shared import (
     IntelSchema, 
     MySQLConnector
 )
-from .create_tables import MySQLRepository
+from .mysql_repository import MySQLRepository
 
 KAFKA_SIGNALS_INTEL_TOPIC = "dlq_signals_intel"
 LOG_LEVEL="DEBUG"
