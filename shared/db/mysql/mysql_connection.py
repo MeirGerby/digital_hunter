@@ -7,18 +7,18 @@ MYSQL_DATABASE = "data"
 
 class MySQLConnector:
     def __init__(self) -> None:
-        self.mydb: MySQLConnection | None = None 
-
-    def get_connection(self):
         self.mydb = connect(
             host=MYSQL_HOST,
             user=MYSQL_USER,
             password=MYSQL_PASSWORD, 
             database=MYSQL_DATABASE
         )
+
+    def get_cursor(self):
+        return self.mydb.cursor
     
     def close_connection(self):
         if self.mydb:
-            return self.mydb.close()
+            return self.mydb.close
     
 
