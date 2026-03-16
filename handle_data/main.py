@@ -13,7 +13,7 @@ class Manager:
 
     def main(self):
         """start the program by running the consumer loop"""
-        self.consumer.consumer_loop(SIGNAL_TYPES_TOPICS, self.data_manager) 
+        self.consumer.consumer_loop( self.data_manager, SIGNAL_TYPES_TOPICS) 
 
 if __name__ == "__main__":
     manager = Manager()
