@@ -41,7 +41,7 @@ class Manager:
                 clean_data = damage.model_dump()
                 self.mysql_repository.insert_to_damage(values=clean_data, connector=self.mysql_connector)  # type: ignore
             else:
-                log_event(level="Error", message="")
+                log_event(level="Error", message=f"data: {data}")
                 self.producer.send_message(data=data, topic=KAFKA_SIGNALS_INTEL_TOPIC)
         except Exception as e: 
             log_event(level="Error", message=f"{e}")
