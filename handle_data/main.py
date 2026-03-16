@@ -37,7 +37,7 @@ class Manager:
                 # the message is from damage 
                 damage = DamageSchema(**data)
                 if damage.result == "destroyed":
-                    raise Exception(f"the target {damage.entity_id} already destroyed")
+                    self.mysql_repository.update_after_attack(entity_id=damage.entity_id, connector=self.mysql_connector)   # type: ignore
                 clean_data = damage.model_dump()
                 self.mysql_repository.insert_to_damage(values=clean_data, connector=self.mysql_connector)  # type: ignore
             else:
