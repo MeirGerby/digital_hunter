@@ -4,8 +4,10 @@ from shared import (
     ProducerMessage,
     DamageSchema,
     AttackSchema,
-    IntelSchema
+    IntelSchema, 
+    MySQLConnector
 )
+from .create_tables import MySQLRepository
 
 KAFKA_SIGNALS_INTEL_TOPIC = "dlq_signals_intel"
 LOG_LEVEL="DEBUG"
@@ -15,6 +17,7 @@ class Manager:
     def __init__(self):
         self.consumer = ConsumerMessage(KAFKA_GROUP_ID) 
         self.producer = ProducerMessage() 
+        self.mysql_cursor = MySQLConnector().get_cursor()
     
     def data_manager(self, data: dict):
         """the callback function for handling and managing the coming data"""
@@ -41,6 +44,7 @@ class Manager:
 
 
     def main(self):
+        MySQLRepository().create_tables(self.mysql_cursor) # type: ignore
         """start the program by running the consumer loop"""
         self.consumer.consumer_loop(self.data_manager, SIGNAL_TYPES_TOPICS) 
 
