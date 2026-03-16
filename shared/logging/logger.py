@@ -45,6 +45,7 @@ def log_event(level, message, extra_info=None):
     try:
         # 3. Ship to Elasticsearch index 'intel-logs'
         es.index(index="intel-logs", document=document)
+        print(f"[LOCAL LOG - {document}")
     except Exception as e:
         # 4. Fallback mechanism: Print to terminal if the connection fails
         print(f"⚠️  [LOCAL LOG - {level.upper()}] {message} | Connection Error: {e}")
