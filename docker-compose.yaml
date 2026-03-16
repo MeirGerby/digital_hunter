@@ -34,8 +34,22 @@ services:
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
-      - ES_JAVA_OPTS=-Xms2g -Xmx2g
+      - ES_JAVA_OPTS=-Xms2g -Xmx2g 
+
+  mysql:
+    image: mysql:8
+    environment:
+      - MYSQL_DATABASE=data 
+      - MYSQL_ROOT_PASSWORD=password 
+      - MYSQL_USER=user 
+      - MYSQL_PASSWORD=password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+
 
 
 volumes:
   kafka_kraft:
+  db-data: 
