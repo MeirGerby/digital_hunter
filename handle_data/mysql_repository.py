@@ -20,8 +20,6 @@ class MySQLRepository:
             ")"
         )
         log_event(level='INFO', message=f"TABLE target_bank was created ")
-
-        log_event(level='INFO', message=f"TABLE intel created seccessfully")
         
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS attack" \
@@ -51,15 +49,18 @@ class MySQLRepository:
                 "FOREIGN KEY (attack_id) REFERENCES attack (attack_id)" \
             ")"
         )
+        log_event(level='INFO', message=f"TABLE intel created seccessfully")
 
 
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS damage" \
             "(" \
-                "entity_id VARCHAR(255) FOREIGN KEY," \
+                "entity_id VARCHAR(255)," \
                 "timestamp DATETIME," \
-                "attack_id VARCHAR(255) FOREIGN KEY," \
-                "result VARCHAR(255)" \
+                "attack_id VARCHAR(255)," \
+                "result VARCHAR(255)," \
+                "FOREIGN KEY (entity_id) REFERENCES target_bank (entity_id)," \
+                "FOREIGN KEY (attack_id) REFERENCES attack (attack_id)" \
             ")"
         )
         log_event(level='INFO', message=f"TABLE damage created seccessfully")
