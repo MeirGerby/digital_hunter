@@ -1,4 +1,4 @@
-from shared import log_event 
+from shared import log_event, target_bank 
 from mysql.connector import MySQLConnection 
 
 class MySQLRepository:
@@ -86,12 +86,12 @@ class MySQLRepository:
         connector.commit()
         log_event(level='INFO', message=f"{cursor.rowcount}, record inserted.")
 
-    def insert_to_target(self, values, connector: MySQLConnection):
+    def insert_to_target(self, connector: MySQLConnection):
         """insert data to target table"""
-
         cursor = connector.cursor()
-        query = "INSERT INTO target (timestamp, attack_id, entity_id, weapon_type) VALUES (%s, %s, %s, %s)"
-        cursor.execute(operation=query, params=values) 
+        for i in target_bank:
+            query = "INSERT INTO target (timestamp, attack_id, entity_id, weapon_type) VALUES (%s, %s, %s, %s)"
+            cursor.execute(operation=query, params=i) 
         connector.commit()
         log_event(level='INFO', message=f"{cursor.rowcount}, record inserted.")
         
