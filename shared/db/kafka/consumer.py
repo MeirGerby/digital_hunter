@@ -13,8 +13,8 @@ class ConsumerMessage:
         }
         self.consumer = Consumer(self.config)
 
-    def consumer_loop(self, callback):
-        self.consumer.subscribe([KAFKA_TOPIC])
+    def consumer_loop(self, callback, topic):
+        self.consumer.subscribe([topic])
 
         print(f"Consumer is running and subscribed to {KAFKA_TOPIC} topics")
 
