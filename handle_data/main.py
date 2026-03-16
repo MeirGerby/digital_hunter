@@ -18,7 +18,19 @@ class Manager:
     
     def data_manager(self, data: dict):
         """the callback function for handling and managing the coming data"""
-        pass
+        try: 
+            if "reported_lat" in data:
+                
+                log_event(level="INFO", message="") 
+            elif "weapon_type" in data:
+                log_event(level="INFO", message="") 
+            elif "result" in data:
+                log_event(level="INFO", message="") 
+            else:
+                log_event(level="Error", message="")
+                self.producer.send_message(data=data, topic=KAFKA_SIGNALS_INTEL_TOPIC)
+        except Exception as e: 
+            log_event(level="Error", message=f"{e}")
 
 
     def main(self):
