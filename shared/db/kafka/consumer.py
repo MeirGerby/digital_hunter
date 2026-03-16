@@ -28,7 +28,11 @@ class ConsumerMessage:
                     continue
 
                
-                data = msg.value().decode("utf-8") # type: ignore 
+                try:
+                    data = msg.value().decode("utf-8") # type: ignore 
+                    json.loads(data)
+                except Exception as e:
+                    data = f"ERROR{e}" 
                 callback(data) 
 
         except KeyboardInterrupt:
