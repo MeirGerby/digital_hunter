@@ -1,11 +1,12 @@
-from shared import MySQLConnector 
+from shared import log_event 
+from mysql.connector import MySQLConnection 
 
 class MySQLRepository:
     def __init__(self):
         pass 
 
-    def create_tables(self, connector: MySQLConnector):
-        cursor = connector.get_cursor()
+    def create_tables(self, connector: MySQLConnection):
+        cursor = connector.cursor()
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS intel" \
             "(" \
@@ -20,6 +21,8 @@ class MySQLRepository:
                 "distance DECIMAL" \
             ")"
         )
+        log_event(level='INFO', message=f"TABLE intel created seccessfully")
+        
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS attack" \
             "(" \
@@ -29,6 +32,8 @@ class MySQLRepository:
                 "weapon_type VARCHAR(255)" \
             ")"
         )
+        log_event(level='INFO', message=f"TABLE attack created seccessfully")
+
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS damage" \
             "(" \
@@ -38,6 +43,8 @@ class MySQLRepository:
                 "result VARCHAR(255)" \
             ")"
         )
+        log_event(level='INFO', message=f"TABLE damage created seccessfully")
+
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS target_bank" \
             "(" \
@@ -50,3 +57,43 @@ class MySQLRepository:
                 "status VARCHAR(255)"  \
             ")"
         )
+        log_event(level='INFO', message=f"TABLE target_bank was created ")
+    
+    def insert_to_attack(self, values, connector: MySQLConnection):
+        """insert data to attack table"""
+
+        cursor = connector.cursor()
+        query = "INSERT INTO attack (timestamp, attack_id, entity_id, weapon_type) VALUES (%s, %s, %s, %s)"
+        cursor.execute(operation=query, params=values) 
+        connector.commit()
+        log_event(level='INFO', message=f"{cursor.rowcount}, record inserted.")
+
+    def insert_to_damage(self, values, connector: MySQLConnection):
+        """insert data to damage table"""
+
+        cursor = connector.cursor()
+        query = "INSERT INTO damage (timestamp, attack_id, entity_id, weapon_type) VALUES (%s, %s, %s, %s)"
+        cursor.execute(operation=query, params=values) 
+        connector.commit()
+        log_event(level='INFO', message=f"{cursor.rowcount}, record inserted.")
+
+    def insert_to_intel(self, values, connector: MySQLConnection):
+        """insert data to intel table"""
+
+        cursor = connector.cursor()
+        query = "INSERT INTO intel (timestamp, attack_id, entity_id, weapon_type) VALUES (%s, %s, %s, %s)"
+        cursor.execute(operation=query, params=values) 
+        connector.commit()
+        log_event(level='INFO', message=f"{cursor.rowcount}, record inserted.")
+
+    def insert_to_target(self, values, connector: MySQLConnection):
+        """insert data to target table"""
+
+        cursor = connector.cursor()
+        query = "INSERT INTO target (timestamp, attack_id, entity_id, weapon_type) VALUES (%s, %s, %s, %s)"
+        cursor.execute(operation=query, params=values) 
+        connector.commit()
+        log_event(level='INFO', message=f"{cursor.rowcount}, record inserted.")
+        
+        
+
