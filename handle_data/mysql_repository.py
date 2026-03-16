@@ -100,9 +100,10 @@ class MySQLRepository:
         cursor = connector.cursor()
         try:
             for i in target_bank:
-                query = "INSERT INTO target_bank (entity_id, name, type, lat, lon, priority_level, status) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-                print(i.values())
-                
+                query = "INSERT INTO target_bank " \
+                "(entity_id, name, type, lat, lon, priority_level, status) " \
+                "VALUES (%s, %s, %s, %s, %s, %s, %s)"
+
                 cursor.execute(operation=query, params=list(i.values()))
                 connector.commit()
             log_event(level='INFO', message=f"{cursor.rowcount}, record inserted.")
