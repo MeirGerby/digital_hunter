@@ -1,1 +1,1 @@
-from .target_bank import TARGET_BANK
+from .target_bank import TARGET_BANK as target_bank
