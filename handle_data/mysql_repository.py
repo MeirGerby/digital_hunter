@@ -98,12 +98,16 @@ class MySQLRepository:
     def insert_to_target(self, connector: MySQLConnection):
         """insert data to target table"""
         cursor = connector.cursor()
-        for i in target_bank:
-            query = "INSERT INTO target_bank (entity_id, name, type, lat, lon, priority_level, status) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-            print(i.values())
-            cursor.execute(operation=query, params=list(i.values())) 
-            connector.commit()
-        log_event(level='INFO', message=f"{cursor.rowcount}, record inserted.")
+        try:
+            for i in target_bank:
+                query = "INSERT INTO target_bank (entity_id, name, type, lat, lon, priority_level, status) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+                print(i.values())
+                
+                cursor.execute(operation=query, params=list(i.values()))
+                connector.commit()
+            log_event(level='INFO', message=f"{cursor.rowcount}, record inserted.")
+        except Exception as e:
+            log_event(level='ERROR', message=e)
         
 
 
