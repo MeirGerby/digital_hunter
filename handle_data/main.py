@@ -51,7 +51,7 @@ class Manager:
     def main(self):
         """start the program by running the consumer loop"""
         self.mysql_repository.create_tables(self.mysql_connector)    # type: ignore
-        self.mysql_repository.insert_to_target(values=clean_data, connector=self.mysql_connector)  # type: ignore
+        self.mysql_repository.insert_to_target(connector=self.mysql_connector)  # type: ignore
         self.consumer.consumer_loop(self.data_manager, SIGNAL_TYPES_TOPICS) 
 
 if __name__ == "__main__":
