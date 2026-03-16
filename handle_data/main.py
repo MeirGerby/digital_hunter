@@ -8,6 +8,7 @@ from shared import (
     MySQLConnector
 )
 from .create_tables import MySQLRepository
+import pandas as pd
 
 KAFKA_SIGNALS_INTEL_TOPIC = "dlq_signals_intel"
 LOG_LEVEL="DEBUG"
@@ -24,7 +25,9 @@ class Manager:
         try: 
             if "reported_lat" in data:
                 # the message is from intel 
-                log_event(level="INFO", message="") 
+                log_event(level="INFO", message="")
+                clean_data = IntelSchema(**data).model_dump()
+                self.mysql_cursor.execute()
             elif "weapon_type" in data:
                 # the message is from airforce attack 
                 log_event(level="INFO", message="") 
