@@ -44,7 +44,7 @@ class Manager:
                 log_event(level="Error", message="")
                 self.producer.send_message(data=data, topic=KAFKA_SIGNALS_INTEL_TOPIC)
         except Exception as e: 
-            log_event(level="Error", message=f"{e}", extra_info=data)
+            log_event(level="Error", message=f"{e}")
             self.producer.send_message(data=data, topic=KAFKA_SIGNALS_INTEL_TOPIC)
 
 
