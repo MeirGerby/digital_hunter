@@ -13,9 +13,9 @@ class MySQLRepository:
                 "entity_id VARCHAR(255) PRIMARY KEY," \
                 "name VARCHAR(255)," \
                 "type VARCHAR(255)," \
-                "lat DECIMAL" \
-                "lon DECIMAL" \
-                "priority_level INT" \
+                "lat DECIMAL," \
+                "lon DECIMAL," \
+                "priority_level INT," \
                 "status VARCHAR(255)"  \
             ")"
         )
@@ -29,7 +29,7 @@ class MySQLRepository:
                 "attack_id VARCHAR(255) PRIMARY KEY," \
                 "entity_id VARCHAR(255) ," \
                 "timestamp DATETIME," \
-                "weapon_type VARCHAR(255)" \
+                "weapon_type VARCHAR(255)," \
                 "" \
                 "FOREIGN KEY (entity_id) REFERENCES target_bank (entity_id)" \
             ")"
@@ -45,10 +45,10 @@ class MySQLRepository:
                 "reported_lat DECIMAL" \
                 "reported_lon DECIMAL" \
                 "signal_type VARCHAR(255)," \
-                "priority_level INT" \
-                "distance DECIMAL" \
-            "FOREIGN KEY (entity_id) REFERENCES target_bank (entity_id)" \
-            "FOREIGN KEY (attack_id) REFERENCES target_bank (attack_id)" \
+                "priority_level INT," \
+                "distance DECIMAL, " \
+                "FOREIGN KEY (entity_id) REFERENCES target_bank (entity_id)," \
+                "FOREIGN KEY (attack_id) REFERENCES target_bank (attack_id)" \
             ")"
         )
 
