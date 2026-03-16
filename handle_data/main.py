@@ -8,7 +8,6 @@ from shared import (
     MySQLConnector
 )
 from .create_tables import MySQLRepository
-import pandas as pd
 
 KAFKA_SIGNALS_INTEL_TOPIC = "dlq_signals_intel"
 LOG_LEVEL="DEBUG"
@@ -18,7 +17,8 @@ class Manager:
     def __init__(self):
         self.consumer = ConsumerMessage(KAFKA_GROUP_ID) 
         self.producer = ProducerMessage() 
-        self.mysql_cursor = MySQLConnector().get_cursor()
+        self.mysql_connector = MySQLConnector().get_connection()
+        self.mysql_repository = MySQLRepository()
     
     def data_manager(self, data: dict):
         """the callback function for handling and managing the coming data"""
@@ -27,7 +27,7 @@ class Manager:
                 # the message is from intel 
                 log_event(level="INFO", message="")
                 clean_data = IntelSchema(**data).model_dump()
-                self.mysql_cursor.execute()
+                self.mysql_repository.insert_to_intel(values=clean_data, connector=self.mysql_connector)  # type: ignore
             elif "weapon_type" in data:
                 # the message is from airforce attack 
                 log_event(level="INFO", message="") 
@@ -47,7 +47,7 @@ class Manager:
 
 
     def main(self):
-        MySQLRepository().create_tables(self.mysql_cursor) # type: ignore
+        self.mysql_repository.create_tables(self.mysql_connector)    # type: ignore
         """start the program by running the consumer loop"""
         self.consumer.consumer_loop(self.data_manager, SIGNAL_TYPES_TOPICS) 
 
