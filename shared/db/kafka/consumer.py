@@ -5,10 +5,10 @@ from confluent_kafka import Consumer
 KAFKA_BOOTSTRAP_SERVERS="localhost:9092"
 KAFKA_TOPIC=""
 class ConsumerMessage:
-    def __init__(self):
+    def __init__(self, group_id):
         self.config = {
             "bootstrap.servers": KAFKA_BOOTSTRAP_SERVERS,
-            "group.id": KAFKA_TOPIC,
+            "group.id": group_id,
             "auto.offset.reset": "earliest"
         }
         self.consumer = Consumer(self.config)
