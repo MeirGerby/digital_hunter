@@ -1,2 +1,2 @@
-from .kafka import ConsumerMessage
-from .kafka import ProducerMessage 
+from .kafka import ConsumerMessage, ProducerMessage 
+from .mysql import MySQLConnector 
