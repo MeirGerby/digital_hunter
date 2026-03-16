@@ -30,7 +30,7 @@ class Manager:
 
             elif "weapon_type" in data:
                 # the message is from airforce attack
-                clean_data = IntelSchema(**data).model_dump() 
+                clean_data = AttackSchema(**data).model_dump() 
                 self.mysql_repository.insert_to_attack(values=clean_data, connector=self.mysql_connector)  # type: ignore
 
             elif "result" in data:
