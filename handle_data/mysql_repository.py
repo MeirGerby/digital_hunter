@@ -27,7 +27,7 @@ class MySQLRepository:
             "CREATE TABLE IF NOT EXISTS attack" \
             "(" \
                 "attack_id VARCHAR(255) PRIMARY KEY," \
-                "entity_id VARCHAR(255) ," \
+                "entity_id VARCHAR(255)," \
                 "timestamp DATETIME," \
                 "weapon_type VARCHAR(255)," \
                 "" \
@@ -40,15 +40,15 @@ class MySQLRepository:
             "(" \
                 "signal_id VARCHAR(255) PRIMARY KEY, " \
                 "timestamp DATETIME," \
-                "attack_id VARCHAR(255) ," \
-                "entity_id VARCHAR(255) ," \
-                "reported_lat DECIMAL" \
-                "reported_lon DECIMAL" \
+                "attack_id VARCHAR(255)," \
+                "entity_id VARCHAR(255)," \
+                "reported_lat DECIMAL," \
+                "reported_lon DECIMAL," \
                 "signal_type VARCHAR(255)," \
                 "priority_level INT," \
                 "distance DECIMAL, " \
                 "FOREIGN KEY (entity_id) REFERENCES target_bank (entity_id)," \
-                "FOREIGN KEY (attack_id) REFERENCES target_bank (attack_id)" \
+                "FOREIGN KEY (attack_id) REFERENCES attack (attack_id)" \
             ")"
         )
 
