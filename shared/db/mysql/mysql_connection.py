@@ -15,7 +15,7 @@ class MySQLConnector:
         )
 
     def get_cursor(self):
-        return self.mydb.cursor
+        return self.mydb.cursor()
     
     def close_connection(self):
         if self.mydb:
