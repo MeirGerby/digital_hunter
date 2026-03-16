@@ -28,7 +28,7 @@ class ConsumerMessage:
                     continue
 
                
-                data = json.loads(msg.value().decode("utf-8")) # type: ignore 
+                data = msg.value().decode("utf-8") # type: ignore 
                 callback(data) 
 
         except KeyboardInterrupt:
