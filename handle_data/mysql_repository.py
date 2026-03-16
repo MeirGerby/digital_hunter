@@ -110,5 +110,11 @@ class MySQLRepository:
         except Exception as e:
             log_event(level='ERROR', message=e)
         
-
+    def update_after_attack(self, connector: MySQLConnection, entity_id):
+        """update the target_bank after bomming the target"""
+        query = f"UPDATE target_bank SET status = inactive WHERE entity_id = {entity_id}"
+        cursor = connector.cursor()
+        cursor.execute(query)
+        connector.commit() 
+        log_event(level='INFO', message=f"{cursor.rowcount}, record affected")
 
