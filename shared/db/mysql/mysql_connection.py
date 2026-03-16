@@ -2,6 +2,7 @@ from mysql.connector import connect, MySQLConnection
 
 MYSQL_HOST = "localhost"
 MYSQL_USER= "root" 
+MYSQL_PORT=3306
 MYSQL_PASSWORD = "password" 
 MYSQL_DATABASE = "data"
 
@@ -11,7 +12,8 @@ class MySQLConnector:
             host=MYSQL_HOST,
             user=MYSQL_USER,
             password=MYSQL_PASSWORD, 
-            database=MYSQL_DATABASE
+            database=MYSQL_DATABASE,
+            port=MYSQL_PORT
         )
         return self.mydb
         
