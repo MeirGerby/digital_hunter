@@ -8,44 +8,6 @@ class MySQLRepository:
     def create_tables(self, connector: MySQLConnection):
         cursor = connector.cursor()
         cursor.execute(
-            "CREATE TABLE IF NOT EXISTS intel" \
-            "(" \
-                "signal_id VARCHAR(255) PRIMARY KEY, " \
-                "timestamp DATETIME," \
-                "attack_id VARCHAR(255) FOREIGN KEY," \
-                "entity_id VARCHAR(255) FOREIGN KEY," \
-                "reported_lat DECIMAL" \
-                "reported_lon DECIMAL" \
-                "signal_type VARCHAR(255)," \
-                "priority_level INT" \
-                "distance DECIMAL" \
-            ")"
-        )
-        log_event(level='INFO', message=f"TABLE intel created seccessfully")
-        
-        cursor.execute(
-            "CREATE TABLE IF NOT EXISTS attack" \
-            "(" \
-                "attack_id VARCHAR(255) PRIMARY KEY," \
-                "entity_id VARCHAR(255) FOREIGN KEY," \
-                "timestamp DATETIME," \
-                "weapon_type VARCHAR(255)" \
-            ")"
-        )
-        log_event(level='INFO', message=f"TABLE attack created seccessfully")
-
-        cursor.execute(
-            "CREATE TABLE IF NOT EXISTS damage" \
-            "(" \
-                "entity_id VARCHAR(255) FOREIGN KEY," \
-                "timestamp DATETIME," \
-                "attack_id VARCHAR(255) FOREIGN KEY," \
-                "result VARCHAR(255)" \
-            ")"
-        )
-        log_event(level='INFO', message=f"TABLE damage created seccessfully")
-
-        cursor.execute(
             "CREATE TABLE IF NOT EXISTS target_bank" \
             "(" \
                 "entity_id VARCHAR(255) PRIMARY KEY," \
@@ -58,6 +20,52 @@ class MySQLRepository:
             ")"
         )
         log_event(level='INFO', message=f"TABLE target_bank was created ")
+
+        log_event(level='INFO', message=f"TABLE intel created seccessfully")
+        
+        cursor.execute(
+            "CREATE TABLE IF NOT EXISTS attack" \
+            "(" \
+                "attack_id VARCHAR(255) PRIMARY KEY," \
+                "entity_id VARCHAR(255) ," \
+                "timestamp DATETIME," \
+                "weapon_type VARCHAR(255)" \
+                "" \
+                "FOREIGN KEY (entity_id) REFERENCES target_bank (entity_id)" \
+            ")"
+        )
+        log_event(level='INFO', message=f"TABLE attack created seccessfully")
+        cursor.execute(
+            "CREATE TABLE IF NOT EXISTS intel" \
+            "(" \
+                "signal_id VARCHAR(255) PRIMARY KEY, " \
+                "timestamp DATETIME," \
+                "attack_id VARCHAR(255) ," \
+                "entity_id VARCHAR(255) ," \
+                "reported_lat DECIMAL" \
+                "reported_lon DECIMAL" \
+                "signal_type VARCHAR(255)," \
+                "priority_level INT" \
+                "distance DECIMAL" \
+            "FOREIGN KEY (entity_id) REFERENCES target_bank (entity_id)" \
+            "FOREIGN KEY (attack_id) REFERENCES target_bank (attack_id)" \
+            ")"
+        )
+
+
+        cursor.execute(
+            "CREATE TABLE IF NOT EXISTS damage" \
+            "(" \
+                "entity_id VARCHAR(255) FOREIGN KEY," \
+                "timestamp DATETIME," \
+                "attack_id VARCHAR(255) FOREIGN KEY," \
+                "result VARCHAR(255)" \
+            ")"
+        )
+        log_event(level='INFO', message=f"TABLE damage created seccessfully")
+
+
+
     
     def insert_to_attack(self, values, connector: MySQLConnection):
         """insert data to attack table"""
