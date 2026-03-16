@@ -27,9 +27,6 @@ class IntelSchema(BaseModel):
         return self 
     
 
-msg = {"timestamp": "2026-03-16T09:47:06.866256+00:00", "signal_id": "f08996fd-5034-45f6-943f-9c7767dbc280", "entity_id": "TGT-015", "reported_lat": 31.514866, "reported_lon": 34.45254, "signal_type": "VISINT", "priority_level": 1}                
-intel = IntelSchema(**msg)
-print(intel)
 
 
     
