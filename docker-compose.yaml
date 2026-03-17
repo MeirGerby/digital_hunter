@@ -57,7 +57,26 @@ services:
     depends_on:
       - mysql
     environment:
-      - PMA_HOST=mysql
+      - PMA_HOST=mysql 
+
+  api:
+    build:
+      context: . 
+      dockerfile: Dockerfile 
+      target: api 
+    ports:
+     - "8000:8000" 
+    depends_on: 
+      - mysql 
+    environment: 
+      - MYSQL_DATABASE=data 
+      - MYSQL_USER=user 
+      - MYSQL_PASSWORD=password 
+      - MYSQL_HOST=mysql
+      # - MYSQL_HOST = "localhost"
+      - MYSQL_USER=root 
+      - MYSQL_PORT=3306
+
 
 
 
