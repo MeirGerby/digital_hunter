@@ -1,5 +1,5 @@
 from fastapi import APIRouter 
-from repository.sql_queries import MysqlQueries 
+from ..repository.sql_queries import MysqlQueries 
 from shared import MySQLConnector
 
 queries = MysqlQueries()
