@@ -29,3 +29,9 @@ async def identifying_suspects():
     conn = MySQLConnector()
     data =  queries.identifying_suspects(conn)
     return data 
+
+@router.get("/coord")
+async def get_coords_by_entity_id(entity_id):
+    conn = MySQLConnector()
+    data =  queries.get_coords_by_entity_id(conn, entity_id)
+    return data 
