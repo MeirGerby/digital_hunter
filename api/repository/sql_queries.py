@@ -1,4 +1,5 @@
 from shared import MySQLConnector
+from maps_data import plot_map_with_geometry  
 
 
 class MysqlQueries:
@@ -73,17 +74,27 @@ class MysqlQueries:
         conn.close_connection()
         return data 
     
+    def get_coords_by_entity_id(self, conn: MySQLConnector):
+        cursor = conn.get_connection().cursor()
+        query = """
+                SELECT i.reported_lat, i.reported_lon
+                FROM intel_signals i 
+                WHERE i.entity_id = 'TGT-005' 
+                ORDER BY i.timestamp
+                """
+        
+        cursor.execute(query)
+        data = cursor.fetchall()
+        plot_map_with_geometry(coords=data)
+        conn.close_connection()
+        return data 
+    
 
-    
-    
 
 if __name__ == "__main__":
     conn = MySQLConnector() 
-    query = MysqlQueries().get_intel_signals(conn)
-    import pandas as pd 
-    df = pd.DataFrame(query)
-    d = df[df['movement_distance_km'] == 0]
-    print(d)
+    query = MysqlQueries().get_coords_by_entity_id(conn)
+    # print(query)
 
 
 
