@@ -17,7 +17,7 @@ class ProducerMessage:
         if err:
             log_event(level="ERROR", message=f"Delivery failed: {err}")
         else:
-            log_event(level="INFO", message=f"Delivered {msg.value().decode("utf-8")}")
+            log_event(level="INFO", message=f"Delivered {msg.value().decode('utf-8')}")
 
 
     def send_message(self, data, topic):
