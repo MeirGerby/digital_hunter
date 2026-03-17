@@ -17,3 +17,9 @@ async def analysis_collection_sources():
     conn = MySQLConnector()
     data =  queries.analysis_collection_sources(conn)
     return data 
+
+@router.get("/new-targets")
+async def finding_new_targets():
+    conn = MySQLConnector()
+    data =  queries.finding_new_targets(conn)
+    return data 
