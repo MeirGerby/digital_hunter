@@ -10,3 +10,10 @@ async def target_movement_alert():
     conn = MySQLConnector()
     data =  queries.target_movement_alert(conn)
     return data 
+
+
+@router.get("/analysis")
+async def analysis_collection_sources():
+    conn = MySQLConnector()
+    data =  queries.analysis_collection_sources(conn)
+    return data 
