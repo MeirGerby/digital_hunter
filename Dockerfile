@@ -14,5 +14,5 @@ FROM base as api
 
 COPY ./shared ./shared 
 COPY ./api ./app/api 
-
+EXPOSE 8000 
 CMD ["python", "-m", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
