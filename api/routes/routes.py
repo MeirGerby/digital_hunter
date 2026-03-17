@@ -23,3 +23,9 @@ async def finding_new_targets():
     conn = MySQLConnector()
     data =  queries.finding_new_targets(conn)
     return data 
+
+@router.get("/identify")
+async def identifying_suspects():
+    conn = MySQLConnector()
+    data =  queries.identifying_suspects(conn)
+    return data 
