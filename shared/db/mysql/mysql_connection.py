@@ -1,10 +1,10 @@
 from mysql.connector import connect, MySQLConnection
-
-MYSQL_HOST = "localhost"
-MYSQL_USER= "root" 
-MYSQL_PORT=3306
-MYSQL_PASSWORD = "password" 
-MYSQL_DATABASE = "data"
+from shared.core.settings import config 
+MYSQL_HOST = config.MYSQL_HOST
+MYSQL_USER = config.MYSQL_USER
+MYSQL_PORT = config.MYSQL_PORT
+MYSQL_PASSWORD = config.MYSQL_PASSWORD
+MYSQL_DATABASE = config.MYSQL_DATABASE
 
 class MySQLConnector:
     def get_connection(self):
