@@ -46,7 +46,7 @@ class MysqlQueries:
                 SELECT 
                     intel_signals.entity_id,
                     COUNT(intel_signals.entity_id) as count_entity
-                FROM `intel_signals` 
+                FROM intel_signals
                 WHERE intel_signals.priority_level = 99 
                 GROUP BY intel_signals.entity_id 
                 ORDER BY COUNT(intel_signals.entity_id) DESC 
@@ -56,10 +56,36 @@ class MysqlQueries:
         data = cursor.fetchall()
         conn.close_connection()
         return data 
+    
+    def identifying_suspects(self, conn: MySQLConnector):
+        """this answer is not correct but i did my best; sorry"""
+        cursor = conn.get_connection().cursor(dictionary=True)
+        query = """
+                SELECT i.entity_id
+                FROM intel_signals i 
+                WHERE HOUR(i.created_at) BETWEEN 20 AND 8 
+                GROUP BY i.entity_id
+                HAVING SUM(i.distance_from_last) > 10
+                """
+        
+        cursor.execute(query)
+        data = cursor.fetchall()
+        conn.close_connection()
+        return data 
+    
+
+    
+    
 
 if __name__ == "__main__":
     conn = MySQLConnector() 
-    query = MysqlQueries().finding_new_targets(conn)
-    print(query)
+    query = MysqlQueries().get_intel_signals(conn)
+    import pandas as pd 
+    df = pd.DataFrame(query)
+    d = df[df['movement_distance_km'] == 0]
+    print(d)
+
+
+
 
     
