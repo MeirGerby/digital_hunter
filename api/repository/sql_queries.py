@@ -39,10 +39,27 @@ class MysqlQueries:
         data = cursor.fetchall()
         conn.close_connection()
         return data 
+    
+    def finding_new_targets(self, conn: MySQLConnector):
+        cursor = conn.get_connection().cursor()
+        query = """
+                SELECT 
+                    intel_signals.entity_id,
+                    COUNT(intel_signals.entity_id) as count_entity
+                FROM `intel_signals` 
+                WHERE intel_signals.priority_level = 99 
+                GROUP BY intel_signals.entity_id 
+                ORDER BY COUNT(intel_signals.entity_id) DESC 
+                LIMIT 3;
+                """
+        cursor.execute(query)
+        data = cursor.fetchall()
+        conn.close_connection()
+        return data 
 
 if __name__ == "__main__":
     conn = MySQLConnector() 
-    query = MysqlQueries().analysis_collection_sources(conn)
+    query = MysqlQueries().finding_new_targets(conn)
     print(query)
 
     
