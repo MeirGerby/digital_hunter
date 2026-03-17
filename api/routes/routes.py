@@ -5,7 +5,7 @@ from shared import MySQLConnector
 queries = MysqlQueries()
 router = APIRouter() 
 
-@router.get("/")
+@router.get("/movement-alert")
 async def target_movement_alert():
     conn = MySQLConnector()
     data =  queries.target_movement_alert(conn)
