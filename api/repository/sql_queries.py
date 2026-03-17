@@ -74,12 +74,12 @@ class MysqlQueries:
         conn.close_connection()
         return data 
     
-    def get_coords_by_entity_id(self, conn: MySQLConnector):
+    def get_coords_by_entity_id(self, conn: MySQLConnector, entity_id):
         cursor = conn.get_connection().cursor()
-        query = """
-                SELECT i.reported_lat, i.reported_lon
+        query = f"""
+                SELECT i.reported_lon, i.reported_lat
                 FROM intel_signals i 
-                WHERE i.entity_id = 'TGT-005' 
+                WHERE i.entity_id = '{entity_id}' 
                 ORDER BY i.timestamp
                 """
         
@@ -93,8 +93,8 @@ class MysqlQueries:
 
 if __name__ == "__main__":
     conn = MySQLConnector() 
-    query = MysqlQueries().get_coords_by_entity_id(conn)
-    # print(query)
+    query = MysqlQueries().get_coords_by_entity_id(conn, 'TGT-015')
+    print(query)
 
 
 
