@@ -20,6 +20,9 @@ class MysqlQueries:
                 """
         cursor.execute(query)
         data = cursor.fetchall()
+        conn.close_connection()
         return data 
+    
 
 
+    
